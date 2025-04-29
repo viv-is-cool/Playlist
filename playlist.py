@@ -68,5 +68,5 @@ def set_background(url):
     st.markdown(page_bg_img, unsafe_allow_html=True)
 
 # Set background image
-set_background("https://images.unsplash.com/photo-1533109721025-d1*
+set_background("https://images.unsplash.com/photo-1533109721025-d1ae7ee7c1e1?q=80&w=3270&auto=format&fit=crop")
 
