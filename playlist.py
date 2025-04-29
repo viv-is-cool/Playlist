@@ -69,4 +69,3 @@ def set_background(url):
 
 # Set background image
 set_background("https://images.unsplash.com/photo-1533109721025-d1ae7ee7c1e1?q=80&w=3270&auto=format&fit=crop")
-
