@@ -2,7 +2,6 @@ import streamlit as st
 import yt_dlp
 import os
 from pathlib import Path  
-import streamlit as st
 
 st.set_page_config(
     page_icon="🎧",
@@ -10,7 +9,6 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="expanded",
 )
-
 
 st.markdown("""
     <style>
@@ -31,7 +29,6 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-
 downloads_path = str(Path.home() / "Downloads")
 
 def download_audio(url, quality):
@@ -43,10 +40,16 @@ def download_audio(url, quality):
             'preferredcodec': 'mp3',
             'preferredquality': quality,
         }],
+        'http_headers': {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        },
     }
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+    except Exception as e:
+        st.error(f"❌ Failed to download {url}\nError: {e}")
 
 def set_background(url):
     page_bg_img = f"""
@@ -76,8 +79,6 @@ code = st.sidebar.text_input("Enter code!", type="password")
 st.sidebar.divider()
 
 # Author info
-
-
 if code == "Vivaan_27":
     st.write("Hello, website creator!")
 
@@ -147,10 +148,9 @@ with st.expander("🎚 Select Audio Quality"):
     download_speed_Bps = download_speed_mbps * 125000
     est_time_sec = round((est_size_MB * 1024 * 1024) / download_speed_Bps, 1)
 
-    
     st.info(f"📦 Estimated file size per song: {est_size_MB} MB")
     st.info(f"⏱️ Lowest download time per song: {est_time_sec} seconds")
-    st.info ("if yor speeds are slower than these something is wrong")
+    st.info("If your speeds are slower than these, something is wrong.")
 
 # Download logic
 if download:
