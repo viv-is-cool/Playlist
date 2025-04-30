@@ -1,9 +1,9 @@
 import streamlit as st
 import yt_dlp
 import os
-from pathlib import Path  
-import streamlit as st
+from pathlib import Path
 
+# Streamlit app configuration
 st.set_page_config(
     page_icon="🎧",
     page_title="playlist.com 🎶",
@@ -11,19 +11,26 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-
+# Add glowing title and background CSS
 st.markdown("""
     <style>
     .glow-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 1vh;  /* Full viewport height */
+        height: 1vh;
     }
     .glow {
         font-size: 48px;
         color: #fff;
         text-shadow: 0 0 10px #00FFFF;
+    }
+    .stApp {
+        background-image: url("https://images.unsplash.com/photo-1533109721025-d1ae7ee7c1e1?q=80&w=3270&auto=format&fit=crop");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
     }
     </style>
     <div class="glow-container">
@@ -31,42 +38,41 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-
+# Path for downloads
 downloads_path = str(Path.home() / "Downloads")
 
+# Function to download audio
 def download_audio(url, quality):
-    ydl_opts = {
-        'format': 'bestaudio/best',
-        'outtmpl': os.path.join(downloads_path, '%(title)s.%(ext)s'),
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': quality,
-        }],
-    }
+    try:
+        # Ensure downloads path exists
+        if not os.path.exists(downloads_path):
+            os.makedirs(downloads_path)
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+        # Clean the URL (remove timestamps)
+        clean_url = url.split('?')[0]
 
-def set_background(url):
-    page_bg_img = f"""
-    <style>
-        .stApp {{
-            background-image: url("{url}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }}
-    </style>
-    """
-    st.markdown(page_bg_img, unsafe_allow_html=True)
+        # yt_dlp options
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'outtmpl': os.path.join(downloads_path, '%(title)s.%(ext)s'),
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': quality,
+            }],
+            'quiet': False,  # Show detailed logs
+            'verbose': True,  # Enable verbose output
+        }
 
-# Set background image
-set_background("https://images.unsplash.com/photo-1533109721025-d1ae7ee7c1e1?q=80&w=3270&auto=format&fit=crop")
-st.divider()
+        # Download the audio
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([clean_url])
 
-# Sidebar
+        st.success(f"✅ Successfully downloaded: {clean_url}")
+    except Exception as e:
+        st.error(f"❌ Failed to download {url}\nError: {e}")
+
+# Sidebar options
 st.sidebar.title("Options")
 st.sidebar.divider()
 button_1 = st.sidebar.button("Show copyable playlist")
@@ -75,9 +81,7 @@ st.sidebar.divider()
 code = st.sidebar.text_input("Enter code!", type="password")
 st.sidebar.divider()
 
-# Author info
-
-
+# Authorization logic
 if code == "Vivaan_27":
     st.write("Hello, website creator!")
 
@@ -90,7 +94,7 @@ if code == "Friend_27":
 if code == "Brother_27":
     st.write("Hello, Vivaan's brother!")
 
-# Download button
+# Download all songs button
 download = st.sidebar.button("Download all songs")
 st.sidebar.divider()
 name = st.sidebar.text_input("Name your playlist here")
@@ -110,7 +114,7 @@ if "Song_playlist" not in st.session_state:
 col_1, col_2 = st.columns([1, 1])
 
 with col_1:
-    add_song = st.button("Add song URL" )
+    add_song = st.button("Add song URL")
     if add_song:
         st.session_state.Song_playlist.append("")
 
@@ -143,14 +147,13 @@ with st.expander("🎚 Select Audio Quality"):
     avg_minutes = 4
     bitrate_kbps = int(quality)
     est_size_MB = round((bitrate_kbps * 1000 / 8 * avg_minutes * 60) / (1024 * 1024), 2)
-    download_speed_mbps = 5  # assume 5 Mbps download speed
+    download_speed_mbps = 5  # Assume 5 Mbps download speed
     download_speed_Bps = download_speed_mbps * 125000
     est_time_sec = round((est_size_MB * 1024 * 1024) / download_speed_Bps, 1)
 
-    
     st.info(f"📦 Estimated file size per song: {est_size_MB} MB")
     st.info(f"⏱️ Lowest download time per song: {est_time_sec} seconds")
-    st.info ("if yor speeds are slower than these something is wrong")
+    st.info("If your speeds are slower than these, something is wrong.")
 
 # Download logic
 if download:
@@ -159,7 +162,6 @@ if download:
             if url.startswith("http"):
                 try:
                     download_audio(url, quality)
-                    st.success(f"✅ Downloaded: {url}")
                     st.audio("Ding_Sound_Effect.mp3", format="audio/mp3", autoplay=True)
                     st.balloons()
                 except Exception as e:
