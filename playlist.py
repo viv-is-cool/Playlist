@@ -48,9 +48,6 @@ def download_audio(url, quality):
         if not os.path.exists(downloads_path):
             os.makedirs(downloads_path)
 
-        # Clean the URL (remove timestamps)
-        clean_url = url.split('?')[0]
-
         # yt_dlp options
         ydl_opts = {
             'format': 'bestaudio/best',
@@ -67,11 +64,17 @@ def download_audio(url, quality):
 
         # Download the audio
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([clean_url])
+            result = ydl.download([url])
 
-        st.success(f"✅ Successfully downloaded: {clean_url}")
+        if result == 0:
+            st.success(f"✅ Successfully downloaded: {url}")
+        else:
+            st.error(f"❌ Failed to download {url}. Check if the URL is correct.")
+
+    except yt_dlp.utils.DownloadError as e:
+        st.error(f"❌ Download error for {url}: {str(e)}")
     except Exception as e:
-        st.error(f"❌ Failed to download {url}\nError: {e}")
+        st.error(f"❌ Unexpected error for {url}: {str(e)}")
 
 # Sidebar options
 st.sidebar.title("Options")
