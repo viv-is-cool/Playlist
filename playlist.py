@@ -44,6 +44,10 @@ downloads_path = str(Path.home() / "Downloads")
 # Function to download audio
 def download_audio(url, quality):
     try:
+        if not url.startswith("http"):
+            st.warning(f"⚠️ Invalid URL skipped: {url}")
+            return
+
         # Ensure downloads path exists
         if not os.path.exists(downloads_path):
             os.makedirs(downloads_path)
@@ -62,6 +66,9 @@ def download_audio(url, quality):
             'ignoreerrors': True,  # Continue even if some videos fail
         }
 
+        # Debug logging
+        st.write(f"Debug: Attempting to download URL: {url}")
+
         # Download the audio
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             result = ydl.download([url])
@@ -70,7 +77,6 @@ def download_audio(url, quality):
             st.success(f"✅ Successfully downloaded: {url}")
         else:
             st.error(f"❌ Failed to download {url}. Check if the URL is correct.")
-
     except yt_dlp.utils.DownloadError as e:
         st.error(f"❌ Download error for {url}: {str(e)}")
     except Exception as e:
@@ -107,9 +113,9 @@ if name != "":
 st.sidebar.divider()
 st.sidebar.write("Rate Us")
 st.sidebar.divider()
-selected = st.sidebar.feedback("stars")
+selected = st.sidebar.radio("Rate Us:", ["⭐", "⭐⭐", "⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐⭐⭐"])
 if selected is not None:
-    st.sidebar.write("Thank you for rating us!")
+    st.sidebar.write(f"Thank you for rating us {selected}!")
 
 # Playlist input
 if "Song_playlist" not in st.session_state:
@@ -156,7 +162,7 @@ with st.expander("🎚 Select Audio Quality"):
     est_time_sec = round((est_size_MB * 1024 * 1024) / download_speed_Bps, 1)
 
     st.info(f"📦 Estimated file size per song: {est_size_MB} MB")
-    st.info(f"⏱️ Lowest download time per song: {est_time_sec} seconds")
+    st.info(f"⏱️ Estimated download time per song: {est_time_sec} seconds")
     st.info("If your speeds are slower than these, something is wrong.")
 
 # Download logic
