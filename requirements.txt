@@ -2,3 +2,4 @@ streamlit
 yt-dlp
 pathlib
 ffmpeg-python
+ffprobe
