@@ -152,20 +152,26 @@ with st.expander("🎚 Select Audio Quality"):
     st.info(f"⏱️ Lowest download time per song: {est_time_sec} seconds")
     st.info ("if yor speeds are slower than these something is wrong")
 
-# Download logic
-if download:
-    with st.spinner("🔍 Downloading your songs..."):
-        for url in st.session_state.Song_playlist:
-            if url.startswith("http"):
-                try:
-                    download_audio(url, quality)
-                    st.success(f"✅ Downloaded: {url}")
-                    st.audio("Ding_Sound_Effect.mp3", format="audio/mp3", autoplay=True)
-                    st.balloons()
-                except Exception as e:
-                    st.error(f"❌ Failed to download {url}\nError: {e}")
-            else:
-                st.warning(f"⚠️ Skipped invalid URL: {url}")
+def download_audio(url, quality):
+    clean_url = url.split('?')[0]  # Remove timestamp
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'outtmpl': os.path.join(downloads_path, '%(title)s.%(ext)s'),
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': quality,
+        }],
+        'sleep_interval': 5,  # Avoid rate limiting
+        'cookiefile': 'cookies.txt',  # Use cookies if needed
+        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    }
+
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([clean_url])
+    except yt_dlp.utils.DownloadError as e:
+        st.error(f"❌ Failed to download {url}\nError: {e}")
 
 # Show/hide playlist
 if button_1:
