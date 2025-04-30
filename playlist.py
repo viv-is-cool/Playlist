@@ -60,8 +60,9 @@ def download_audio(url, quality):
                 'preferredcodec': 'mp3',
                 'preferredquality': quality,
             }],
-            'quiet': False,  # Show detailed logs
-            'verbose': True,  # Enable verbose output
+            'quiet': False,
+            'verbose': True,
+            'ignoreerrors': True,  # Continue even if some videos fail
         }
 
         # Download the audio
