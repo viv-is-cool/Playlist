@@ -63,7 +63,11 @@ def download_audio(url, quality):
             }],
             'quiet': False,
             'verbose': True,
-            'ignoreerrors': True,  # Continue even if some videos fail
+            'ignoreerrors': True,
+            'http_headers': {  # Add headers to mimic a browser
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36',
+                'Accept-Language': 'en-US,en;q=0.5',
+            },
         }
 
         # Debug logging
@@ -76,7 +80,7 @@ def download_audio(url, quality):
         if result == 0:
             st.success(f"✅ Successfully downloaded: {url}")
         else:
-            st.error(f"❌ Failed to download {url}. Check if the URL is correct.")
+            st.error(f"❌ Failed to download {url}. Check if the URL is correct or restricted.")
     except yt_dlp.utils.DownloadError as e:
         st.error(f"❌ Download error for {url}: {str(e)}")
     except Exception as e:
