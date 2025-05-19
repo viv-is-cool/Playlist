@@ -11,6 +11,8 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+st.write("download the working version here for free:  https://github.com/viv-is-cool/Instant-Audio  ")
+
 # Add custom CSS for styling
 st.markdown("""
     <style>
