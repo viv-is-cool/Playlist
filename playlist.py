@@ -136,7 +136,7 @@ if st.sidebar.button("Download all songs"):
 
 # Show/hide playlist
 if button_1:
-    st.write("Your Playlist is:", st.session_state.Song_playlist)
+st.sidebar.link_button("go download the working version here!", "https://github.com/viv-is-cool/Instant-Audio")
 
 
 st.sidebar.write("download the working version here for free:  https://github.com/viv-is-cool/Instant-Audio  ")
