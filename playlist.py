@@ -139,4 +139,4 @@ if button_1:
     st.write("Your Playlist is:", st.session_state.Song_playlist)
 
 
-st.sidebar.write("download the working version here for free:  https://github.com/viv-is-cool/Instant-Audio  ")
+st.sidebar.link_button("download the working version here for free", "https://github.com/viv-is-cool/Instant-Audio")
