@@ -1,5 +1,4 @@
-import streamlit as st 
-st.write("import streamlit as st
+import streamlit as st
 
 st.set_page_config(
     page_icon="🎧",
@@ -49,4 +48,4 @@ st.divider()
 
 st.subheader("Best part is its totally free and you can download it with the button below!")
 
-st.link_button("download Instant Audio, the solution to downloading songs here! ", "https://github.com/viv-is-cool/Instant-Audio/releases/download/v1.1.0/Instant.audio.zip")")
+st.link_button("download Instant Audio, the solution to downloading songs here! ", "https://github.com/viv-is-cool/Instant-Audio/releases/download/v1.1.0/Instant.audio.zip")
