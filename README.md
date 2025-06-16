@@ -1,4 +1,4 @@
-# 🎵 Playlist.com
+# 🎵 Instant Audio
 
 A Streamlit app that lets you build a playlist and download audio from YouTube.
 
