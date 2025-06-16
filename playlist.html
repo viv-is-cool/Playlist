@@ -1,0 +1,1648 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Instant Audio - All your songs with you wherever you go!</title>
+
+    <meta name="description" content="Download your favorite YouTube songs for free with Instant Audio">
+
+    <style>
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
+
+
+        body {
+
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+            background: linear-gradient(to bottom, #0f172a, #581c87, #0f172a);
+
+            color: white;
+
+            overflow-x: hidden;
+
+            line-height: 1.6;
+
+        }
+
+
+
+        /* Animations */
+
+        @keyframes fade-in {
+
+            0% {
+
+                opacity: 0;
+
+                transform: translateY(20px);
+
+            }
+
+            100% {
+
+                opacity: 1;
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+
+
+        @keyframes slide-up {
+
+            0% {
+
+                transform: translateY(100px);
+
+                opacity: 0;
+
+            }
+
+            100% {
+
+                transform: translateY(0);
+
+                opacity: 1;
+
+            }
+
+        }
+
+
+
+        @keyframes bounce-gentle {
+
+            0%, 100% {
+
+                transform: translateY(0);
+
+            }
+
+            50% {
+
+                transform: translateY(-10px);
+
+            }
+
+        }
+
+
+
+        @keyframes glow {
+
+            0%, 100% {
+
+                box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+
+            }
+
+            50% {
+
+                box-shadow: 0 0 40px rgba(34, 197, 94, 0.6);
+
+            }
+
+        }
+
+
+
+        @keyframes pulse {
+
+            0%, 100% {
+
+                opacity: 1;
+
+            }
+
+            50% {
+
+                opacity: 0.5;
+
+            }
+
+        }
+
+
+
+        /* Utility Classes */
+
+        .animate-fade-in {
+
+            animation: fade-in 0.6s ease-out;
+
+        }
+
+
+
+        .animation-delay-300 {
+
+            animation-delay: 300ms;
+
+        }
+
+
+
+        .animation-delay-500 {
+
+            animation-delay: 500ms;
+
+        }
+
+
+
+        .animate-pulse {
+
+            animation: pulse 2s infinite;
+
+        }
+
+
+
+        .animate-bounce {
+
+            animation: bounce-gentle 2s ease-in-out infinite;
+
+        }
+
+
+
+        /* Hero Section */
+
+        .hero-section {
+
+            position: relative;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+
+        .hero-bg {
+
+            position: absolute;
+
+            inset: 0;
+
+            background-image: url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
+            opacity: 0.2;
+
+            will-change: transform;
+
+        }
+
+
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 10;
+
+            text-align: center;
+
+            padding: 0 1rem;
+
+            max-width: 64rem;
+
+            margin: 0 auto;
+
+        }
+
+
+
+        .hero-title-container {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 1rem;
+
+            margin-bottom: 2rem;
+
+        }
+
+
+
+        .music-icon {
+
+            width: 4rem;
+
+            height: 4rem;
+
+            color: #22c55e;
+
+        }
+
+
+
+        .hero-title {
+
+            font-size: clamp(3rem, 8vw, 6rem);
+
+            font-weight: bold;
+
+            background: linear-gradient(to right, #22c55e, #3b82f6);
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            color: transparent;
+
+        }
+
+
+
+        .hero-subtitle {
+
+            font-size: clamp(1.5rem, 4vw, 2rem);
+
+            color: #d1d5db;
+
+            margin-bottom: 2rem;
+
+        }
+
+
+
+        .feature-badges {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 1rem;
+
+            margin-bottom: 3rem;
+
+        }
+
+
+
+        .badge {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.5rem;
+
+            background: rgba(255, 255, 255, 0.1);
+
+            backdrop-filter: blur(10px);
+
+            border-radius: 9999px;
+
+            padding: 0.75rem 1.5rem;
+
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+        }
+
+
+
+        .badge-icon {
+
+            width: 1.25rem;
+
+            height: 1.25rem;
+
+        }
+
+
+
+        .badge-green { color: #22c55e; }
+
+        .badge-blue { color: #3b82f6; }
+
+        .badge-purple { color: #a855f7; }
+
+
+
+        /* Scroll Indicator */
+
+        .scroll-indicator {
+
+            position: absolute;
+
+            bottom: 2rem;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+        }
+
+
+
+        .scroll-mouse {
+
+            width: 1.5rem;
+
+            height: 2.5rem;
+
+            border: 2px solid rgba(255, 255, 255, 0.3);
+
+            border-radius: 1rem;
+
+            display: flex;
+
+            justify-content: center;
+
+        }
+
+
+
+        .scroll-dot {
+
+            width: 0.25rem;
+
+            height: 0.75rem;
+
+            background: rgba(255, 255, 255, 0.6);
+
+            border-radius: 0.125rem;
+
+            margin-top: 0.5rem;
+
+        }
+
+
+
+        /* Main Content */
+
+        .main-content {
+
+            padding: 5rem 1rem;
+
+        }
+
+
+
+        .container {
+
+            max-width: 96rem;
+
+            margin: 0 auto;
+
+        }
+
+
+
+        .section-header {
+
+            text-align: center;
+
+            margin-bottom: 4rem;
+
+        }
+
+
+
+        .section-title {
+
+            font-size: clamp(2.5rem, 6vw, 4rem);
+
+            font-weight: bold;
+
+            margin-bottom: 1.5rem;
+
+            background: linear-gradient(to right, #22c55e, #3b82f6);
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            color: transparent;
+
+        }
+
+
+
+        .section-description {
+
+            font-size: 1.25rem;
+
+            color: #d1d5db;
+
+            max-width: 48rem;
+
+            margin: 0 auto;
+
+        }
+
+
+
+        .pros-cons-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr;
+
+            gap: 3rem;
+
+            align-items: start;
+
+        }
+
+
+
+        @media (min-width: 768px) {
+
+            .pros-cons-grid {
+
+                grid-template-columns: 1fr 1fr;
+
+            }
+
+        }
+
+
+
+        .pros-section, .cons-section {
+
+            min-height: 600px;
+
+        }
+
+
+
+        .section-heading {
+
+            font-size: 2rem;
+
+            font-weight: bold;
+
+            margin-bottom: 2rem;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.75rem;
+
+        }
+
+
+
+        .pros-heading { color: #22c55e; }
+
+        .cons-heading { color: #ef4444; }
+
+
+
+        .heading-icon {
+
+            width: 2rem;
+
+            height: 2rem;
+
+        }
+
+
+
+        .pro-item, .con-item {
+
+            padding: 1.5rem;
+
+            border-radius: 1rem;
+
+            border: 1px solid;
+
+            margin-bottom: 1.5rem;
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 1rem;
+
+            transition: all 0.7s ease;
+
+            transform-origin: center;
+
+        }
+
+
+
+        .pro-item {
+
+            border-color: rgba(34, 197, 94, 0.3);
+
+        }
+
+
+
+        .con-item {
+
+            background: linear-gradient(to right, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2));
+
+            border-color: rgba(239, 68, 68, 0.5);
+
+        }
+
+
+
+        .pro-item.active {
+
+            background: linear-gradient(to right, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.2));
+
+            border-color: rgba(34, 197, 94, 0.5);
+
+            transform: scale(1.05);
+
+            filter: blur(0);
+
+        }
+
+
+
+        .pro-item.past {
+
+            background: rgba(55, 65, 81, 0.3);
+
+            border-color: rgba(55, 65, 81, 0.3);
+
+            transform: scale(0.95);
+
+            filter: blur(2px);
+
+            opacity: 0.4;
+
+        }
+
+
+
+        .pro-item.future {
+
+            background: rgba(55, 65, 81, 0.1);
+
+            border-color: rgba(55, 65, 81, 0.2);
+
+            transform: scale(0.95);
+
+            opacity: 0.2;
+
+        }
+
+
+
+        .item-icon {
+
+            width: 2rem;
+
+            height: 2rem;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            transition: all 0.3s ease;
+
+        }
+
+
+
+        .pro-icon {
+
+            background: #22c55e;
+
+        }
+
+
+
+        .pro-item.past .pro-icon,
+
+        .pro-item.future .pro-icon {
+
+            background: #6b7280;
+
+        }
+
+
+
+        .con-icon {
+
+            background: #ef4444;
+
+        }
+
+
+
+        .check-icon, .x-icon {
+
+            width: 1rem;
+
+            height: 1rem;
+
+            stroke-width: 2;
+
+        }
+
+
+
+        .item-text {
+
+            font-size: 1.125rem;
+
+            transition: color 0.3s ease;
+
+        }
+
+
+
+        .pro-item.active .item-text {
+
+            color: white;
+
+        }
+
+
+
+        .pro-item.past .item-text,
+
+        .pro-item.future .item-text {
+
+            color: #9ca3af;
+
+        }
+
+
+
+        /* GitHub Section */
+
+        .github-section {
+
+            margin-top: 3rem;
+
+            padding: 1.5rem;
+
+            border-radius: 1rem;
+
+            background: linear-gradient(to right, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
+
+            border: 1px solid rgba(168, 85, 247, 0.5);
+
+        }
+
+
+
+        .github-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 1rem;
+
+            margin-bottom: 1rem;
+
+        }
+
+
+
+        .github-icon {
+
+            width: 2rem;
+
+            height: 2rem;
+
+            color: #a855f7;
+
+        }
+
+
+
+        .github-title {
+
+            font-size: 1.25rem;
+
+            font-weight: bold;
+
+        }
+
+
+
+        .github-description {
+
+            color: #d1d5db;
+
+            margin-bottom: 1rem;
+
+        }
+
+
+
+        .github-link {
+
+            color: #a855f7;
+
+            text-decoration: none;
+
+            transition: color 0.3s ease;
+
+        }
+
+
+
+        .github-link:hover {
+
+            color: #c084fc;
+
+        }
+
+
+
+        /* CTA Section */
+
+        .cta-section {
+
+            padding: 5rem 1rem;
+
+        }
+
+
+
+        .cta-container {
+
+            max-width: 64rem;
+
+            margin: 0 auto;
+
+            text-align: center;
+
+        }
+
+
+
+        .cta-card {
+
+            background: linear-gradient(to right, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1));
+
+            backdrop-filter: blur(10px);
+
+            border-radius: 1.5rem;
+
+            padding: 3rem;
+
+            border: 1px solid rgba(34, 197, 94, 0.2);
+
+        }
+
+
+
+        .cta-title {
+
+            font-size: clamp(2.5rem, 6vw, 4rem);
+
+            font-weight: bold;
+
+            margin-bottom: 1.5rem;
+
+            background: linear-gradient(to right, #22c55e, #3b82f6);
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            color: transparent;
+
+        }
+
+
+
+        .cta-description {
+
+            font-size: 1.125rem;
+
+            color: #d1d5db;
+
+            margin-bottom: 2rem;
+
+            max-width: 32rem;
+
+            margin-left: auto;
+
+            margin-right: auto;
+
+        }
+
+
+
+        .download-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 0.75rem;
+
+            background: linear-gradient(to right, #22c55e, #3b82f6);
+
+            color: white;
+
+            font-weight: bold;
+
+            padding: 1rem 2rem;
+
+            border-radius: 9999px;
+
+            font-size: 1.125rem;
+
+            text-decoration: none;
+
+            transition: all 0.3s ease;
+
+            border: none;
+
+            cursor: pointer;
+
+        }
+
+
+
+        .download-button:hover {
+
+            background: linear-gradient(to right, #16a34a, #2563eb);
+
+            transform: scale(1.05);
+
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+        }
+
+
+
+        .download-icon {
+
+            width: 1.5rem;
+
+            height: 1.5rem;
+
+        }
+
+
+
+        .feature-list {
+
+            margin-top: 1.5rem;
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 1rem;
+
+            font-size: 0.875rem;
+
+            color: #9ca3af;
+
+        }
+
+
+
+        .feature-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.25rem;
+
+        }
+
+
+
+        .feature-item-icon {
+
+            width: 1rem;
+
+            height: 1rem;
+
+        }
+
+
+
+        /* Footer */
+
+        .footer {
+
+            padding: 3rem 1rem;
+
+            border-top: 1px solid #374151;
+
+        }
+
+
+
+        .footer-content {
+
+            max-width: 64rem;
+
+            margin: 0 auto;
+
+            text-align: center;
+
+        }
+
+
+
+        .footer-logo {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 0.5rem;
+
+            margin-bottom: 1rem;
+
+        }
+
+
+
+        .footer-logo-icon {
+
+            width: 1.5rem;
+
+            height: 1.5rem;
+
+            color: #22c55e;
+
+        }
+
+
+
+        .footer-logo-text {
+
+            font-size: 1.25rem;
+
+            font-weight: bold;
+
+        }
+
+
+
+        .footer-text {
+
+            color: #9ca3af;
+
+        }
+
+
+
+        /* Responsive */
+
+        @media (max-width: 768px) {
+
+            .hero-title-container {
+
+                flex-direction: column;
+
+                gap: 0.5rem;
+
+            }
+
+
+
+            .feature-badges {
+
+                flex-direction: column;
+
+                align-items: center;
+
+            }
+
+
+
+            .cta-card {
+
+                padding: 2rem 1rem;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Hero Section -->
+
+    <section class="hero-section">
+
+        <div class="hero-bg" id="hero-bg"></div>
+
+        
+
+        <div class="hero-content">
+
+            <div class="animate-fade-in">
+
+                <div class="hero-title-container">
+
+                    <!-- Music Icon -->
+
+                    <svg class="music-icon animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+
+                    </svg>
+
+                    <h1 class="hero-title">Instant Audio</h1>
+
+                </div>
+
+                
+
+                <p class="hero-subtitle animation-delay-300 animate-fade-in">
+
+                    All your songs with you wherever you go! 🎶
+
+                </p>
+
+                
+
+                <div class="feature-badges">
+
+                    <div class="badge">
+
+                        <!-- Lightning Icon -->
+
+                        <svg class="badge-icon badge-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+
+                        </svg>
+
+                        <span>Lightning Fast</span>
+
+                    </div>
+
+                    <div class="badge">
+
+                        <!-- Shield Icon -->
+
+                        <svg class="badge-icon badge-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+
+                        </svg>
+
+                        <span>100% Free</span>
+
+                    </div>
+
+                    <div class="badge">
+
+                        <!-- GitHub Icon -->
+
+                        <svg class="badge-icon badge-purple" fill="currentColor" viewBox="0 0 24 24">
+
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+
+                        </svg>
+
+                        <span>Open Source</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Scroll Indicator -->
+
+        <div class="scroll-indicator animate-bounce">
+
+            <div class="scroll-mouse">
+
+                <div class="scroll-dot animate-pulse"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Main Content Section -->
+
+    <section class="main-content">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <h2 class="section-title">Why pay fees or use WiFi?</h2>
+
+                <p class="section-description">
+
+                    Instant Audio downloads all your favorite songs at once, completely free! 
+
+                    No subscriptions, no limitations, just pure music freedom.
+
+                </p>
+
+            </div>
+
+
+
+            <div class="pros-cons-grid">
+
+                <!-- Pros Section -->
+
+                <div class="pros-section" id="pros-section">
+
+                    <h3 class="section-heading pros-heading">
+
+                        <!-- Check Icon -->
+
+                        <svg class="heading-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+
+                        </svg>
+
+                        Pros
+
+                    </h3>
+
+                    
+
+                    <div class="pros-list">
+
+                        <div class="pro-item active" data-index="0">
+
+                            <div class="item-icon pro-icon">
+
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <p class="item-text">Can download any song on YouTube (with the exclusion of private and age restricted videos)</p>
+
+                        </div>
+
+
+
+                        <div class="pro-item future" data-index="1">
+
+                            <div class="item-icon pro-icon">
+
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <p class="item-text">Takes only seconds for your songs to be in your hands so that you can have them on the go!</p>
+
+                        </div>
+
+
+
+                        <div class="pro-item future" data-index="2">
+
+                            <div class="item-icon pro-icon">
+
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <p class="item-text">Super lightweight so that any computer can handle it!</p>
+
+                        </div>
+
+
+
+                        <div class="pro-item future" data-index="3">
+
+                            <div class="item-icon pro-icon">
+
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <p class="item-text">Only 100mb which anyone can spare</p>
+
+                        </div>
+
+
+
+                        <div class="pro-item future" data-index="4">
+
+                            <div class="item-icon pro-icon">
+
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <p class="item-text">All open sourced on GitHub for transparency and trust</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Cons Section -->
+
+                <div class="cons-section">
+
+                    <h3 class="section-heading cons-heading">
+
+                        <!-- X Icon -->
+
+                        <svg class="heading-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+
+                        </svg>
+
+                        Cons
+
+                    </h3>
+
+                    
+
+                    <div class="cons-list">
+
+                        <div class="con-item">
+
+                            <div class="item-icon con-icon">
+
+                                <svg class="x-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <p class="item-text">Available on Windows and Linux but not Mac (yet!)</p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- GitHub Section -->
+
+                    <div class="github-section">
+
+                        <div class="github-header">
+
+                            <svg class="github-icon" fill="currentColor" viewBox="0 0 24 24">
+
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+
+                            </svg>
+
+                            <h4 class="github-title">Open Source</h4>
+
+                        </div>
+
+                        <p class="github-description">
+
+                            Fully transparent and open source on GitHub for your peace of mind.
+
+                        </p>
+
+                        <a href="https://github.com/viv-is-cool/Instant-Audio" target="_blank" rel="noopener noreferrer" class="github-link">
+
+                            View on GitHub →
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- CTA Section -->
+
+    <section class="cta-section">
+
+        <div class="cta-container">
+
+            <div class="cta-card">
+
+                <h2 class="cta-title">Ready to get started?</h2>
+
+                <p class="cta-description">
+
+                    The best part? It's totally free! Download Instant Audio now and start building your offline music collection.
+
+                </p>
+
+                
+
+                <a href="https://github.com/viv-is-cool/Instant-Audio/releases/download/v1.1.0/Instant.audio.zip" class="download-button">
+
+                    <!-- Download Icon -->
+
+                    <svg class="download-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+
+                    </svg>
+
+                    Download Instant Audio
+
+                </a>
+
+                
+
+                <div class="feature-list">
+
+                    <span class="feature-item">
+
+                        <svg class="feature-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+
+                        </svg>
+
+                        100% Safe
+
+                    </span>
+
+                    <span class="feature-item">
+
+                        <svg class="feature-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+
+                        </svg>
+
+                        Only 100MB
+
+                    </span>
+
+                    <span class="feature-item">
+
+                        <svg class="feature-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+
+                        </svg>
+
+                        No Ads
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Footer -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <div class="footer-logo">
+
+                <svg class="footer-logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+
+                </svg>
+
+                <span class="footer-logo-text">Instant Audio</span>
+
+            </div>
+
+            <p class="footer-text">
+
+                Built with ❤️ for music lovers everywhere
+
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <script>
+
+        // Parallax effect for hero background
+
+        window.addEventListener('scroll', () => {
+
+            const scrollY = window.scrollY;
+
+            const heroBg = document.getElementById('hero-bg');
+
+            if (heroBg) {
+
+                heroBg.style.transform = `translateY(${scrollY * 0.5}px)`;
+
+            }
+
+
+
+            // Scroll-triggered pros animation
+
+            const prosSection = document.getElementById('pros-section');
+
+            if (prosSection) {
+
+                const rect = prosSection.getBoundingClientRect();
+
+                const sectionHeight = prosSection.offsetHeight;
+
+                const scrollProgress = Math.max(0, Math.min(1, -rect.top / (sectionHeight * 0.8)));
+
+                const currentIndex = Math.floor(scrollProgress * 5);
+
+                const activeIndex = Math.min(currentIndex, 4);
+
+
+
+                // Update pros items
+
+                const proItems = document.querySelectorAll('.pro-item');
+
+                proItems.forEach((item, index) => {
+
+                    item.classList.remove('active', 'past', 'future');
+
+                    
+
+                    if (index === activeIndex) {
+
+                        item.classList.add('active');
+
+                    } else if (index < activeIndex) {
+
+                        item.classList.add('past');
+
+                    } else {
+
+                        item.classList.add('future');
+
+                    }
+
+                });
+
+            }
+
+        });
+
+
+
+        // Smooth scroll for any internal links (if you add them later)
+
+        document.addEventListener('click', (e) => {
+
+            if (e.target.tagName === 'A' && e.target.getAttribute('href').startsWith('#')) {
+
+                e.preventDefault();
+
+                const target = document.querySelector(e.target.getAttribute('href'));
+
+                if (target) {
+
+                    target.scrollIntoView({ behavior: 'smooth' });
+
+                }
+
+            }
+
+        });
+
+
+
+        // Add animation classes on load
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Trigger animations for elements that should animate on load
+
+            const animatedElements = document.querySelectorAll('.animate-fade-in');
+
+            animatedElements.forEach((el, index) => {
+
+                setTimeout(() => {
+
+                    el.style.opacity = '1';
+
+                    el.style.transform = 'translateY(0)';
+
+                }, index * 100);
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
