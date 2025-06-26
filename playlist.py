@@ -405,7 +405,7 @@ st.markdown("""
         border-radius: 10px;
         text-decoration: none;
         transition: all 0.3s ease;
-        margin-left: 500px;
+        margin-left: 550px;
             
     }
 
