@@ -3,3 +3,5 @@ yt-dlp
 pathlib
 ffmpeg-python
 ffprobe
+streamlit-lottie
+
