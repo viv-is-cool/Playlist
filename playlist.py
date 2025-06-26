@@ -111,7 +111,7 @@ with colb:
         border-radius: 10px;
         text-decoration: none;
         transition: all 0.3s ease;
-        margin-left: 80px
+        margin-left: 55px
     }
 
     .download-box a.download-btn:hover {
