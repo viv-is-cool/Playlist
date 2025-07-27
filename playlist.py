@@ -45,7 +45,7 @@ with st.container():
 
 
 st.title("Listen to all your songs on the go")
-st.write("Why use wifi or pay a fee to download your favorite songs! Just use Instant audio! Instant Audio can download all your favorite songs at once for free! ")
+st.write("Why pay a fee to download your favorite songs! Just use Instant audio! Instant Audio can download all your favorite songs at once for free! ")
 st.write("best part its totally free")
 
 # ---- WHAT I DO ----
