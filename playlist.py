@@ -125,7 +125,7 @@ with colb:
         <p>
             click the button below to start the download! or scroll down to learn more
         </p>
-        <a href="https://github.com/viv-is-cool/Instant-Audio/releases/download/v1.1.0/Instant.audio.zip" class="download-btn" target="_blank">
+        <a href="https://github.com/viv-is-cool/Instant-Audio/releases/download/v1.2.1/Instant.Audio.v1.2.1.zip" class="download-btn" target="_blank">
             🚀 Download Now
         </a>
     </div>
@@ -420,8 +420,9 @@ st.markdown("""
         <p>
             click the button below to start the download!
         </p>
-        <a href="https://github.com/viv-is-cool/Instant-Audio/releases/download/v1.1.0/Instant.audio.zip" class="button" target="_blank">
+        <a href="https://github.com/viv-is-cool/Instant-Audio/releases/download/v1.2.1/Instant.Audio.v1.2.1.zip" class="button" target="_blank">
             🚀 Download here
         </a>
     </div>
 """, unsafe_allow_html=True)
+
